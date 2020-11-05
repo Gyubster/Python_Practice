@@ -1,0 +1,40 @@
+import pygame
+
+size = [720, 480]
+screen = pygame.display.set_mode(size)
+Clock = pygame.time.Clock()
+Fps = 60
+
+Black = (0, 0, 0)
+White = (255, 255, 255)
+Red = (255, 0, 0)
+
+rect = pygame.Rect((0, 0), (720, 480))
+# rect 사이즈 조절.
+main = pygame.Surface((30, 30))
+# block 크기
+main.fill(White)
+# draw rect는 화면, 색깔, 좌표
+
+while True:
+    Clock.tick(Fps)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            quit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                rect.move_ip(0, -2)
+            elif event.key == pygame.K_DOWN:
+                rect.move_ip(0, 2)
+            elif event.key == pygame.K_LEFT:
+                rect.move_ip(-2, 0)
+            elif event.key == pygame.K_RIGHT:
+                rect.move_ip(2, 0)
+
+    pygame.draw.rect(screen, Red, [700, 460, 20, 20])
+
+
+    screen.fill(Black)
+    screen.blit(main, rect)
+    pygame.display.update()
+
