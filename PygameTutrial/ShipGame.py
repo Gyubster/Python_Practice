@@ -1,4 +1,5 @@
 import pygame
+import time
 
 pygame.init()
 
@@ -20,6 +21,23 @@ ship_width, ship_height = 177, 87
 
 def ship(x,y):
     game_display.blit(shipImg, (x, y))
+
+def text_objects(text, font):
+    textSurface = font.render(text, True, black)
+    return textSurface, textSurface.get_rect()
+
+def message_display(text):
+    largeText = pygame.font.Font('freesansbold.ttf', 115)
+    TextSurf, TextRect = text_objects(text, largeText)
+    TextRect.center = ((display_width/2), (display_height/2))
+    game_display.blit(TextSurf, TextRect)
+
+    pygame.display.update()
+
+    time.sleep(2)
+
+def crash():
+    message_display('Fail!')
 
 def game_loop():
     game_exit = False
@@ -57,11 +75,8 @@ def game_loop():
         game_display.fill(white)
         ship(x, y)
 
-        if x < 0 or x > display_width - ship_width:
-            game_exit = True
-
-        if y < 0 or y > display_height - ship_height:
-            game_exit = True
+        if x < 0 or x > display_width - ship_width or y < 0 or y > display_height - ship_height:
+            crash()
 
         pygame.display.update()
         clock.tick(60)
