@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 
 pygame.init()
 
@@ -14,13 +15,19 @@ white = (255, 255, 255)
 
 clock = pygame.time.Clock()
 crashed = False
-shipImg = pygame.image.load('ship.png')
 
+shipImg = pygame.image.load('ship.png')
 ship_speed = 0
 ship_width, ship_height = 177, 87
 
+fishImg = pygame.image.load('fish.png')
+fish_width, fish_height = 176, 153
+
 def ship(x,y):
     game_display.blit(shipImg, (x, y))
+
+def fish(fishX, fishY):
+    game_display.blit(fishImg, (fishX, fishY))
 
 def text_objects(text, font):
     textSurface = font.render(text, True, black)
@@ -48,6 +55,9 @@ def game_loop():
     x_change = 0
     y_change = 0
 
+    fishX = random.randrange(0, display_width - fish_width)
+    fishY = random.randrange(0, display_height - fish_height)
+
     while not game_exit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -73,6 +83,7 @@ def game_loop():
         y += y_change
 
         game_display.fill(white)
+        fish(fishX, fishY)
         ship(x, y)
 
         if x < 0 or x > display_width - ship_width or y < 0 or y > display_height - ship_height:
